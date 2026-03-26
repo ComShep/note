@@ -1,8 +1,9 @@
 import styles from './MainPage.module.css'
 import { Editor } from './ui/editor/Editor'
 import { Header } from './ui/header/Header'
-import { NotesList } from './ui/notesList/NotesList'
 import { Statusbar } from './ui/statusbar/Statusbar'
+import { NotesHeader } from './ui/notesHeader/NotesHeader'
+import { NotesList } from './ui/notesList/NotesList'
 
 
 export const MainPage = () => {
@@ -10,12 +11,15 @@ export const MainPage = () => {
 
 	return (
 		<div className={styles.wrapper}>
-			<Header/>
+			<Header />
 			<div className={styles.list}>
-				<NotesList/>
-				<Editor/>
+				<div className={styles.notes}>
+					<NotesHeader />
+					<NotesList />
+				</div>
+				<Editor />
 			</div>
-			<Statusbar/>
+			<Statusbar />
 		</div>
 	)
 }

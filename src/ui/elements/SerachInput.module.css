@@ -1,0 +1,33 @@
+.search{
+	position: relative;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.search input {
+	width: 100%;
+	padding: 12px 15px 12px 45px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 1rem;
+	transition: all 0.3s;
+	background-color: white;
+}
+
+.search input:focus{
+	outline: none;
+	border-color: #2575fc;
+	box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.1);
+}
+
+.search svg {
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 1.1rem;
+	z-index: 1;
+	pointer-events: none; /* Чтобы клик проходил сквозь иконку к инпуту */
+}
