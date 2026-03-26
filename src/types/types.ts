@@ -14,5 +14,6 @@ export type NotesResponse = {
 }
 
 export type useNotesReturn = {
-	notes: Array<Note> | null
+	notes: Array<Note> | null,
+	isLoading: boolean
 }

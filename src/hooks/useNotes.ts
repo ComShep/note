@@ -4,9 +4,11 @@ import { getNotesApi } from "../api/api";
 
 
 export function useNotes(): useNotesReturn {
-	const [notes, setNotes] = useState<Note[] | null>(null)
+	const [notes, setNotes] = useState<Note[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const loadNotesData = async () => {
+		setIsLoading(true)
 		try {
 			const data = await getNotesApi()
 			const arrayOfData = Object.entries(data);
@@ -17,8 +19,9 @@ export function useNotes(): useNotesReturn {
 			setNotes(arrayOfNotes)
 		} catch (err) {
 			console.log(err)
+		} finally  {
+			setIsLoading(false)
 		}
-
 	}
 
 	useEffect(() => {
@@ -26,6 +29,7 @@ export function useNotes(): useNotesReturn {
 	}, [])
 
 	return {
-		notes
+		notes,
+		isLoading
 	}
 }

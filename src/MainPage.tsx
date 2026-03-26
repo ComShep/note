@@ -8,7 +8,7 @@ import { useNotes } from './hooks/useNotes'
 
 
 export const MainPage = () => {
-	const {notes} = useNotes();
+	const {notes, isLoading} = useNotes();
 	console.log(new Date().toLocaleString('ru-RU'))
 
 	return (
@@ -19,6 +19,7 @@ export const MainPage = () => {
 					<NotesHeader />
 					<NotesList 
 						notes={notes}
+						isLoading={isLoading}
 					/>
 				</div>
 				<Editor />

@@ -1,10 +1,27 @@
 import { CiStickyNote } from "react-icons/ci";
 import { FaRegFrownOpen } from "react-icons/fa";
+import { AiOutlineClockCircle } from "react-icons/ai";
 import styles from './NotesList.module.css'
+import type { Note } from "../../types/types";
+import { NotesItem } from "../notesItem/NotesItem";
 
-export const NotesList = () => {
+type Props = {
+  notes: Note[] | null,
+	isLoading: boolean
+}
 
-	if (false) {
+export const NotesList = ({notes, isLoading}: Props) => {
+
+	if (isLoading) {
+		return <div className={styles.container}>
+			<div className={styles.empty}>
+				<AiOutlineClockCircle />
+				<p>Загрузка...</p>
+			</div>
+		</div>
+	}
+
+	if (notes?.length === 0) {
 		return <div className={styles.container}>
 			<div className={styles.empty}>
 				<CiStickyNote />
@@ -26,7 +43,14 @@ export const NotesList = () => {
 
 	return (
 		<div className={styles.container}>
-			
+			<ul>
+				{notes?.map(note => (
+					<NotesItem
+						key={note.id}
+						note={note}
+					/>
+				))}
+			</ul>
 		</div>
 	)
 }

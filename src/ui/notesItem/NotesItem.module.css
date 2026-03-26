@@ -1,0 +1,39 @@
+.item {
+	padding: 16px;
+	margin-bottom: 12px;
+	background-color: white;
+	border-radius: 8px;
+	border-left: 4px solid #6a11cb;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.item:hover, .active{
+	transform: translateX(5px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.active{
+	background-color: #eef5ff;
+	border-left-color: #2575fc;
+}
+
+.title {
+	font-weight: 600;
+	font-size: 1.1rem;
+	margin-bottom: 6px;
+	color: #333
+}
+
+.preview {
+	font-size: 0.9rem;
+	color: #666;
+	line-height: 1.4;
+}
+
+.date {
+	font-size: 0.8rem;
+	color: #888;
+	margin-top: 8px;
+}
