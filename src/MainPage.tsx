@@ -4,9 +4,11 @@ import { Header } from './ui/header/Header'
 import { Statusbar } from './ui/statusbar/Statusbar'
 import { NotesHeader } from './ui/notesHeader/NotesHeader'
 import { NotesList } from './ui/notesList/NotesList'
+import { useNotes } from './hooks/useNotes'
 
 
 export const MainPage = () => {
+	const {notes} = useNotes();
 	console.log(new Date().toLocaleString('ru-RU'))
 
 	return (
@@ -15,7 +17,9 @@ export const MainPage = () => {
 			<div className={styles.list}>
 				<div className={styles.notes}>
 					<NotesHeader />
-					<NotesList />
+					<NotesList 
+						notes={notes}
+					/>
 				</div>
 				<Editor />
 			</div>

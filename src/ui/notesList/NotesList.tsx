@@ -26,7 +26,7 @@ export const NotesList = () => {
 
 	return (
 		<div className={styles.container}>
-
+			
 		</div>
 	)
 }
