@@ -1,24 +1,32 @@
-// import { IoIosSave } from "react-icons/io";
-// import { MdDelete } from "react-icons/md";
+import { IoIosSave } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 import styles from './Editor.module.css'
 import { useNotesContext } from "../../contexts/NotesContext";
 import { useEffect, useState, type ChangeEvent } from "react";
+import { Button } from '../elements/Button';
 
 export const Editor = () => {
 	const { activeNote } = useNotesContext();
 	const [titleInputValue, setTitleInputValue] = useState<string>('');
+	const [textInputValue, setTextInputValue] = useState<string>('');
 
 	useEffect(() => {
 		if (activeNote) {
 			setTitleInputValue(activeNote.title)
+			setTextInputValue(activeNote.text)
 		} else {
 			setTitleInputValue('')
+			setTextInputValue('')
 		}
 
 	}, [activeNote])
 
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTitleInputValue(event.target.value)
+	}
+
+	const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+		setTextInputValue(event.target.value)
 	}
 
 	if (activeNote === null) {
@@ -30,7 +38,9 @@ export const Editor = () => {
 	}
 
 	return (
-		<div className={styles.container}>
+		<div
+			className={styles.container}
+			key={activeNote.id}>
 			<div className={styles.header}>
 				<input
 					className={styles.title}
@@ -39,7 +49,28 @@ export const Editor = () => {
 					onChange={handleTitleChange}
 				/>
 			</div>
-			<div className={styles.area}></div>
+			<div className={styles.area}>
+				<textarea
+					className={styles.text}
+					placeholder='Введите текст записи...'
+					value={textInputValue}
+					onChange={handleTextChange}
+				></textarea>
+				<div className={styles.actions}>
+					<Button
+						title='Сохранить'
+						icon={<IoIosSave />}
+						onClick={() => { }}
+						color="blue"
+					/>
+					<Button
+						title='Удалить'
+						icon={<MdDelete/>}
+						onClick={() => { }}
+						color="red"
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }

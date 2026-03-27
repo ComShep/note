@@ -20,7 +20,7 @@
 	color: #333;
 }
 
-.note_title:focus, .note_text:focus {
+.title:focus, .text:focus {
 	outline: none;
 	border-bottom-color: #2575fc;
 }
@@ -31,7 +31,7 @@
 	flex-direction: column;
 }	
 
-.note_text {
+.text {
 	flex: 1;
 	width: 100%;
 	padding: 20px;
@@ -43,7 +43,7 @@
 	transition: border-color 0.2s;
 }
 
-.note_text:focus {
+.text:focus {
 	outline: none;
 	border-color: #2575fc;
 	box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.1);
