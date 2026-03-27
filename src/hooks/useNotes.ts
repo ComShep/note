@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import type { Note, useNotesReturn } from "../types/types";
-import { getNotesApi } from "../api/api";
+import { getNotesList } from "../api/api";
 
 
-export function useNotes(): useNotesReturn {
+export function useNotesData(): useNotesReturn {
 	const [notes, setNotes] = useState<Note[]>([])
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const loadNotesData = async () => {
 		setIsLoading(true)
 		try {
-			const data = await getNotesApi()
+			const data = await getNotesList()
 			const arrayOfData = Object.entries(data);
 			const arrayOfNotes = arrayOfData.map(([id, note]) => ({
 				id: id,

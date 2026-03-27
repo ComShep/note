@@ -13,6 +13,12 @@ export type NotesResponse = {
 	}
 }
 
+export type NotesDetailResponse = {
+	title: string,
+	text: string,
+	date: string
+}
+
 export type useNotesReturn = {
 	notes: Array<Note> | null,
 	isLoading: boolean

@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { Note } from "../../types/types";
 import styles from "./NotesItem.module.css"
+import { useNotesContext } from "../../contexts/NotesContext";
 
 const getShortText = (text: string) => {
 	let words = text.split(' ');
@@ -13,16 +14,21 @@ type Props = {
 }
 
 export const NotesItem = ({ note }: Props) => {
+	const { activeNoteId, setActiveNoteId } = useNotesContext();
 
 	const noteItemClass = clsx({
 		[styles.item]: true,
-		[styles.active]: true
+		[styles.active]: activeNoteId === note.id
 	})
+
+	const handleClick = (id: string) => {
+		setActiveNoteId(id)
+	}
 
 	return (
 		<li
 			className={noteItemClass}
-			onClick={() => { console.log('выбарана карточка') }}
+			onClick={() => handleClick(note.id)}
 		>
 			<div className={styles.title}>{note.title}</div>
 			<div className={styles.preview}>{getShortText(note.text)}</div>
