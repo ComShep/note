@@ -30,6 +30,7 @@ export function useNotesData(): useNotesReturn {
 
 	return {
 		notes,
+		setNotes,
 		isLoading
 	}
 }

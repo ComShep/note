@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react"
 import type { Note } from "../types/types";
-import { getNotesDetail } from "../api/api";
+import { createNewNote, getNotesDetail } from "../api/api";
 
-export const useNotesOperation = () => {
+type Props = {
+	notes: Note[] | null,
+	setNotes: (notes: Array<Note>) => void
+}
+
+export const useNotesOperation = ({notes, setNotes}: Props) => {
+
 	const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
 	const [activeNote, setActiveNote] = useState<Note | null>(null);
-	const [isLoadingDetail, setIsLoadingDetail] = useState<boolean>(false)
+	const [isLoadingDetail, setIsLoadingDetail] = useState<boolean>(false);
 
 	const loadNoteDetail = async () => {
 		setIsLoadingDetail(true);
@@ -24,6 +30,18 @@ export const useNotesOperation = () => {
 		}
 	}
 
+	const addNewNote = async () => {
+		const newNote = await createNewNote();
+
+		if (notes !== null) {
+			setNotes([...notes, newNote])
+			setActiveNoteId(newNote.id)
+		} else {
+			setNotes([newNote])
+			setActiveNoteId(newNote.id)
+		}
+	}
+
 	useEffect(() => {
 		loadNoteDetail();
 	}, [activeNoteId])
@@ -32,6 +50,7 @@ export const useNotesOperation = () => {
 		activeNoteId,
 		setActiveNoteId,
 		activeNote,
-		isLoadingDetail
+		isLoadingDetail,
+		addNewNote
 	}
 }

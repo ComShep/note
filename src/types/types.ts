@@ -21,5 +21,6 @@ export type NotesDetailResponse = {
 
 export type useNotesReturn = {
 	notes: Array<Note> | null,
+	setNotes: (notes: Array<Note>) => void ,
 	isLoading: boolean
 }

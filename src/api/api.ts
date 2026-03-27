@@ -15,3 +15,27 @@ export const getNotesDetail = async (id:string): Promise<NotesDetailResponse> =>
 
 	return data;
 }
+
+export const createNewNote = async () => {
+	const newNote = {
+		title: 'Новая запись',
+		text: '',
+		date: new Date().toLocaleString('ru-RU')
+	}
+
+	const response = await fetch(`${url}notes.json`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(newNote)
+	})
+
+	const result = await response.json();
+	const id = result.name;
+
+	return {
+		id: id,
+		...newNote
+	}
+}

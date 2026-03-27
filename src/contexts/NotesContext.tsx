@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useNotesData } from "../hooks/useNotes";
+import { useNotesData } from "../hooks/useNotesData";
 import type { Note } from "../types/types";
 import { useNotesOperation } from "../hooks/useNotesOperation";
 
@@ -9,19 +9,21 @@ type NotesContextType = {
 	activeNoteId: string | null,
 	setActiveNoteId: (id: string) => void,
 	activeNote: Note | null
-	isLoadingDetail: boolean
+	isLoadingDetail: boolean,
+	addNewNote: () => void,
 }
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined)
 
 export const NotesProvider = ({ children }: { children: ReactNode }) => {
-	const { notes, isLoading } = useNotesData();
+	const { notes, isLoading, setNotes } = useNotesData();
 	const {
 		activeNoteId,
 		setActiveNoteId,
 		activeNote,
-		isLoadingDetail
-	} = useNotesOperation();
+		isLoadingDetail,
+		addNewNote
+	} = useNotesOperation({notes, setNotes});
 
 	const value = {
 		notes,
@@ -29,7 +31,8 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
 		activeNoteId,
 		setActiveNoteId,
 		activeNote,
-		isLoadingDetail
+		isLoadingDetail,
+		addNewNote
 	};
 
 	return (
