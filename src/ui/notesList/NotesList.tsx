@@ -2,15 +2,12 @@ import { CiStickyNote } from "react-icons/ci";
 import { FaRegFrownOpen } from "react-icons/fa";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import styles from './NotesList.module.css'
-import type { Note } from "../../types/types";
 import { NotesItem } from "../notesItem/NotesItem";
+import { useNotesContext } from "../../contexts/NotesContext";
 
-type Props = {
-  notes: Note[] | null,
-	isLoading: boolean
-}
 
-export const NotesList = ({notes, isLoading}: Props) => {
+export const NotesList = () => {
+	const { notes, isLoading } = useNotesContext()
 
 	if (isLoading) {
 		return <div className={styles.container}>

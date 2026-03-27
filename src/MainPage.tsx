@@ -4,27 +4,24 @@ import { Header } from './ui/header/Header'
 import { Statusbar } from './ui/statusbar/Statusbar'
 import { NotesHeader } from './ui/notesHeader/NotesHeader'
 import { NotesList } from './ui/notesList/NotesList'
-import { useNotes } from './hooks/useNotes'
+import { NotesProvider } from './contexts/NotesContext'
 
 
 export const MainPage = () => {
-	const {notes, isLoading} = useNotes();
-	console.log(new Date().toLocaleString('ru-RU'))
 
 	return (
 		<div className={styles.wrapper}>
 			<Header />
-			<div className={styles.list}>
-				<div className={styles.notes}>
-					<NotesHeader />
-					<NotesList 
-						notes={notes}
-						isLoading={isLoading}
-					/>
+			<NotesProvider>
+				<div className={styles.list}>
+					<div className={styles.notes}>
+						<NotesHeader />
+						<NotesList/>
+					</div>
+					<Editor />
 				</div>
-				<Editor />
-			</div>
-			<Statusbar />
+				<Statusbar />
+			</NotesProvider>
 		</div>
 	)
 }
