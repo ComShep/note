@@ -1,5 +1,5 @@
-import { IoIosSave } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+// import { IoIosSave } from "react-icons/io";
+// import { MdDelete } from "react-icons/md";
 import styles from './Editor.module.css'
 import { useNotesContext } from "../../contexts/NotesContext";
 import { useEffect, useState, type ChangeEvent } from "react";
