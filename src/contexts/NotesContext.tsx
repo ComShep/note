@@ -2,6 +2,7 @@ import { createContext, useContext, type ReactNode } from "react";
 import { useNotesData } from "../hooks/useNotesData";
 import type { Note } from "../types/types";
 import { useNotesOperation } from "../hooks/useNotesOperation";
+import { useEditor } from "../hooks/useEditor";
 
 type NotesContextType = {
 	notes: Note[] | null,
@@ -11,19 +12,31 @@ type NotesContextType = {
 	activeNote: Note | null
 	isLoadingDetail: boolean,
 	addNewNote: () => void,
+	titleInputValue: string,
+	setTitleInputValue: (id: string) => void,
+	textInputValue: string,
+	setTextInputValue: (id: string) => void
 }
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined)
 
 export const NotesProvider = ({ children }: { children: ReactNode }) => {
 	const { notes, isLoading, setNotes } = useNotesData();
+
 	const {
 		activeNoteId,
 		setActiveNoteId,
 		activeNote,
 		isLoadingDetail,
 		addNewNote
-	} = useNotesOperation({notes, setNotes});
+	} = useNotesOperation({ notes, setNotes });
+
+	const {
+		titleInputValue,
+		setTitleInputValue,
+		textInputValue,
+		setTextInputValue
+	} = useEditor(activeNote);
 
 	const value = {
 		notes,
@@ -32,7 +45,11 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
 		setActiveNoteId,
 		activeNote,
 		isLoadingDetail,
-		addNewNote
+		addNewNote,
+		titleInputValue,
+		setTitleInputValue,
+		textInputValue,
+		setTextInputValue
 	};
 
 	return (

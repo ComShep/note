@@ -2,24 +2,11 @@ import { IoIosSave } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import styles from './Editor.module.css'
 import { useNotesContext } from "../../contexts/NotesContext";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { Button } from '../elements/Button';
 
 export const Editor = () => {
-	const { activeNote } = useNotesContext();
-	const [titleInputValue, setTitleInputValue] = useState<string>('');
-	const [textInputValue, setTextInputValue] = useState<string>('');
-
-	useEffect(() => {
-		if (activeNote) {
-			setTitleInputValue(activeNote.title)
-			setTextInputValue(activeNote.text)
-		} else {
-			setTitleInputValue('')
-			setTextInputValue('')
-		}
-
-	}, [activeNote])
+	const { activeNote, titleInputValue, setTitleInputValue, textInputValue, setTextInputValue } = useNotesContext();
 
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTitleInputValue(event.target.value)
