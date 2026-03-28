@@ -12,6 +12,7 @@ type NotesContextType = {
 	activeNote: Note | null
 	isLoadingDetail: boolean,
 	addNewNote: () => void,
+	deleteNote: (id: string) => void,
 	titleInputValue: string,
 	setTitleInputValue: (id: string) => void,
 	textInputValue: string,
@@ -28,7 +29,8 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
 		setActiveNoteId,
 		activeNote,
 		isLoadingDetail,
-		addNewNote
+		addNewNote,
+		deleteNote
 	} = useNotesOperation({ notes, setNotes });
 
 	const {
@@ -46,6 +48,7 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
 		activeNote,
 		isLoadingDetail,
 		addNewNote,
+		deleteNote,
 		titleInputValue,
 		setTitleInputValue,
 		textInputValue,

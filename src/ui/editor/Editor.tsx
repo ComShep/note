@@ -6,7 +6,7 @@ import { type ChangeEvent } from "react";
 import { Button } from '../elements/Button';
 
 export const Editor = () => {
-	const { activeNote, titleInputValue, setTitleInputValue, textInputValue, setTextInputValue } = useNotesContext();
+	const { activeNote, titleInputValue, setTitleInputValue, textInputValue, setTextInputValue, deleteNote } = useNotesContext();
 
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTitleInputValue(event.target.value)
@@ -18,16 +18,17 @@ export const Editor = () => {
 
 	if (activeNote === null) {
 		return (
-			<div className={styles.empty}>
-				<div>Выберите запись или создайте новую</div>
+			<div className={styles.container}>
+				<div className={styles.empty}>
+					<div>Выберите запись или создайте новую</div>
+				</div>
 			</div>
 		)
 	}
 
 	return (
 		<div
-			className={styles.container}
-			key={activeNote.id}>
+			className={styles.container}>
 			<div className={styles.header}>
 				<input
 					className={styles.title}
@@ -53,7 +54,7 @@ export const Editor = () => {
 					<Button
 						title='Удалить'
 						icon={<MdDelete/>}
-						onClick={() => { }}
+						onClick={() => deleteNote(activeNote.id)}
 						color="red"
 					/>
 				</div>

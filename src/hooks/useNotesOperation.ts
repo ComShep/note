@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import type { Note } from "../types/types";
-import { createNewNote, getNotesDetail } from "../api/api";
+import { createNewNote, deleteNoteApi, getNotesDetail } from "../api/api";
 
 type Props = {
 	notes: Note[] | null,
@@ -8,7 +8,6 @@ type Props = {
 }
 
 export const useNotesOperation = ({notes, setNotes}: Props) => {
-
 	const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
 	const [activeNote, setActiveNote] = useState<Note | null>(null);
 	const [isLoadingDetail, setIsLoadingDetail] = useState<boolean>(false);
@@ -42,6 +41,18 @@ export const useNotesOperation = ({notes, setNotes}: Props) => {
 		}
 	}
 
+	const deleteNote = async (id:string) => {
+		if (notes !== null) {
+			try {
+				await deleteNoteApi(id);
+				setNotes(notes.filter(note => note.id !== id))
+				setActiveNote(null)
+			}catch (err) {
+				console.log(err)
+			}
+		}
+	}
+
 	useEffect(() => {
 		loadNoteDetail();
 	}, [activeNoteId])
@@ -51,6 +62,7 @@ export const useNotesOperation = ({notes, setNotes}: Props) => {
 		setActiveNoteId,
 		activeNote,
 		isLoadingDetail,
-		addNewNote
+		addNewNote,
+		deleteNote
 	}
 }

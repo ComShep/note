@@ -39,3 +39,15 @@ export const createNewNote = async () => {
 		...newNote
 	}
 }
+
+export const deleteNoteApi = async (id:string) => {
+	const response = await fetch(`${url}notes/${id}.json`, {
+		method: "DELETE",
+	});
+
+	if (!response.ok) {
+		throw new Error('Ошибка удаления')
+	}
+
+	return true;
+}
