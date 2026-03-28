@@ -1,8 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useNotesData } from "../hooks/useNotesData";
 import type { Note } from "../types/types";
-import { useNotesOperation } from "../hooks/useNotesOperation";
-import { useEditor } from "../hooks/useEditor";
+import { useNotesManager } from "../hooks/useNotesManager";
 
 type NotesContextType = {
 	notes: Note[] | null,
@@ -13,50 +11,20 @@ type NotesContextType = {
 	isLoadingDetail: boolean,
 	addNewNote: () => void,
 	deleteNote: (id: string) => void,
+	editNoteDetail: () => void,
 	titleInputValue: string,
-	setTitleInputValue: (id: string) => void,
+	setTitleInputValue: (value: string) => void,
 	textInputValue: string,
-	setTextInputValue: (id: string) => void
+	setTextInputValue: (value: string) => void
 }
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined)
 
 export const NotesProvider = ({ children }: { children: ReactNode }) => {
-	const { notes, isLoading, setNotes } = useNotesData();
-
-	const {
-		activeNoteId,
-		setActiveNoteId,
-		activeNote,
-		isLoadingDetail,
-		addNewNote,
-		deleteNote
-	} = useNotesOperation({ notes, setNotes });
-
-	const {
-		titleInputValue,
-		setTitleInputValue,
-		textInputValue,
-		setTextInputValue
-	} = useEditor(activeNote);
-
-	const value = {
-		notes,
-		isLoading,
-		activeNoteId,
-		setActiveNoteId,
-		activeNote,
-		isLoadingDetail,
-		addNewNote,
-		deleteNote,
-		titleInputValue,
-		setTitleInputValue,
-		textInputValue,
-		setTextInputValue
-	};
+	const notesManager = useNotesManager();
 
 	return (
-		<NotesContext.Provider value={value}>
+		<NotesContext.Provider value={notesManager}>
 			{children}
 		</NotesContext.Provider>
 	)

@@ -1,4 +1,4 @@
-import type { NotesDetailResponse, NotesResponse } from "../types/types"
+import type { Note, NotesDetailResponse, NotesResponse } from "../types/types"
 
 const url = "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase.app/"
 
@@ -14,6 +14,27 @@ export const getNotesDetail = async (id:string): Promise<NotesDetailResponse> =>
 	const data = await response.json();
 
 	return data;
+}
+
+export const patchNotesDetail = async (id: string, activeNote: Note) => {
+	const response = await fetch(`${url}notes/${id}.json`, {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			title: activeNote.title.trim(),
+			text: activeNote.text.trim(),
+			date: activeNote.date
+		})		
+	});
+
+	if (!response.ok) {
+		throw new Error('Ошибка обновления')
+	}
+
+	const result = response.json();
+	return result
 }
 
 export const createNewNote = async () => {
@@ -51,3 +72,4 @@ export const deleteNoteApi = async (id:string) => {
 
 	return true;
 }
+

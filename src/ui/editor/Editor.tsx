@@ -6,7 +6,16 @@ import { type ChangeEvent } from "react";
 import { Button } from '../elements/Button';
 
 export const Editor = () => {
-	const { activeNote, titleInputValue, setTitleInputValue, textInputValue, setTextInputValue, deleteNote } = useNotesContext();
+	const { 
+		activeNote, 
+		titleInputValue, 
+		setTitleInputValue, 
+		textInputValue, 
+		setTextInputValue, 
+		deleteNote, 
+		isLoadingDetail,
+		editNoteDetail
+	} = useNotesContext();
 
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTitleInputValue(event.target.value)
@@ -16,7 +25,17 @@ export const Editor = () => {
 		setTextInputValue(event.target.value)
 	}
 
-	if (activeNote === null) {
+	if (isLoadingDetail) {
+		return (
+			<div className={styles.container}>
+				<div className={styles.empty}>
+					<div>Загрузка...</div>
+				</div>
+			</div>
+		)
+	}
+
+	if (!activeNote) {
 		return (
 			<div className={styles.container}>
 				<div className={styles.empty}>
@@ -48,12 +67,12 @@ export const Editor = () => {
 					<Button
 						title='Сохранить'
 						icon={<IoIosSave />}
-						onClick={() => { }}
+						onClick={() => editNoteDetail()}
 						color="blue"
 					/>
 					<Button
 						title='Удалить'
-						icon={<MdDelete/>}
+						icon={<MdDelete />}
 						onClick={() => deleteNote(activeNote.id)}
 						color="red"
 					/>

@@ -8,7 +8,7 @@ import { useNotesContext } from "../../contexts/NotesContext";
 
 export const NotesList = () => {
 	const { notes, isLoading } = useNotesContext()
-
+	
 	if (isLoading) {
 		return <div className={styles.container}>
 			<div className={styles.empty}>
