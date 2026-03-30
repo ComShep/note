@@ -6,11 +6,7 @@ export type Note = {
 }
 
 export type NotesResponse = {
-	[key: string]: {
-		title: string,
-		text: string,
-		date: string
-	}
+	[key: string]: NotesDetailResponse
 }
 
 export type NotesDetailResponse = {
@@ -23,4 +19,23 @@ export type useNotesReturn = {
 	notes: Array<Note> | null,
 	setNotes: (notes: Array<Note>) => void ,
 	isLoading: boolean
+}
+
+export type NotesContextType = {
+	notes: Note[] | null,
+	isLoading: boolean;
+	activeNoteId: string | null,
+	setActiveNoteId: (id: string) => void,
+	activeNote: Note | null
+	isLoadingDetail: boolean,
+	addNewNote: () => void,
+	deleteNote: (id: string) => void,
+	editNoteDetail: () => void,
+	titleInputValue: string,
+	setTitleInputValue: (value: string) => void,
+	textInputValue: string,
+	setTextInputValue: (value: string) => void,
+	searchInputValue: string,
+	setSearchInputValue: (value: string) => void,
+	searchNotes: (value: string) => void
 }

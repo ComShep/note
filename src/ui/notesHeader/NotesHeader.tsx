@@ -8,7 +8,12 @@ import { useNotesContext } from "../../contexts/NotesContext";
 
 
 export const NotesHeader = () => {
-	const { addNewNote } = useNotesContext();
+	const { addNewNote, searchNotes, setSearchInputValue } = useNotesContext();
+
+	const handleClear = () => {
+		setSearchInputValue('');
+		searchNotes('')
+	}
 
 	return (
 		<div className={styles.header}>
@@ -24,7 +29,7 @@ export const NotesHeader = () => {
 				<Button
 					icon={<IoClose/>}
 					title="Очистить"
-					onClick={() => { console.log('кнопка нажата Очистить') }}
+					onClick={handleClear}
 					color="grey"
 				/>
 			</div>

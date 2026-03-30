@@ -1,22 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
-import type { Note } from "../types/types";
+import type { NotesContextType } from "../types/types";
 import { useNotesManager } from "../hooks/useNotesManager";
-
-type NotesContextType = {
-	notes: Note[] | null,
-	isLoading: boolean;
-	activeNoteId: string | null,
-	setActiveNoteId: (id: string) => void,
-	activeNote: Note | null
-	isLoadingDetail: boolean,
-	addNewNote: () => void,
-	deleteNote: (id: string) => void,
-	editNoteDetail: () => void,
-	titleInputValue: string,
-	setTitleInputValue: (value: string) => void,
-	textInputValue: string,
-	setTextInputValue: (value: string) => void
-}
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined)
 

@@ -13,29 +13,8 @@ export const useNotesManager = () => {
 	const [titleInputValue, setTitleInputValue] = useState<string>('');
 	const [textInputValue, setTextInputValue] = useState<string>('');
 
-	const loadNoteDetail = async () => {
-		setIsLoadingDetail(true);
-		try {
-			if (activeNoteId !== null) {
-				const data = await getNotesDetail(activeNoteId);
-				const loadedNote = {
-					id: activeNoteId,
-					...data
-				}
-				setActiveNote(loadedNote);
-
-				setTitleInputValue(loadedNote.title)
-				setTextInputValue(loadedNote.text)
-			} else {
-				setActiveNote(null)
-			}
-		} catch (err) {
-			console.log(err);
-			setActiveNote(null);
-		} finally {
-			setIsLoadingDetail(false)
-		}
-	}
+	const [searchInputValue, setSearchInputValue] = useState<string>('');
+	const [filteredNotes, setFilteredNotes] = useState<Note[] | null>(null);
 
 	const addNewNote = async () => {
 		const newNote = await createNewNote();
@@ -93,19 +72,65 @@ export const useNotesManager = () => {
 		}
 	}
 
+	const searchNotes = (query: string) => {
+		setSearchInputValue(query);
+	}
+
+	const loadNoteDetail = async () => {
+		setIsLoadingDetail(true);
+		try {
+			if (activeNoteId !== null) {
+				const data = await getNotesDetail(activeNoteId);
+				const loadedNote = {
+					id: activeNoteId,
+					...data
+				}
+				setActiveNote(loadedNote);
+
+				setTitleInputValue(loadedNote.title)
+				setTextInputValue(loadedNote.text)
+			} else {
+				setActiveNote(null)
+			}
+		} catch (err) {
+			console.log(err);
+			setActiveNote(null);
+		} finally {
+			setIsLoadingDetail(false)
+		}
+	}
+
 	useEffect(() => {
 		loadNoteDetail();
 	}, [activeNoteId])
 
+	useEffect(() => {
+		if (!notes) {
+			setFilteredNotes(null);
+			return
+		}
+
+		if (!searchInputValue.trim()) {
+			setFilteredNotes(notes)
+		}
+
+		const queryLowerCase = searchInputValue.toLowerCase();
+		setFilteredNotes(notes.filter(note =>
+			note.title.toLowerCase().includes(queryLowerCase) || note.text.toLocaleLowerCase().includes(queryLowerCase)
+		))
+	}, [notes, searchInputValue])
+
 	return {
 		// данные 
-		notes,
+		notes: filteredNotes,
 		isLoading,
 		activeNoteId,
 		activeNote,
 		isLoadingDetail,
 		titleInputValue,
 		textInputValue,
+		searchInputValue,
+		setSearchInputValue,
 
 		// сеттеры
 		setActiveNoteId,
@@ -115,6 +140,7 @@ export const useNotesManager = () => {
 		// действия
 		addNewNote,
 		editNoteDetail,
-		deleteNote
+		deleteNote,
+		searchNotes
 	}
 }

@@ -7,7 +7,7 @@ import { useNotesContext } from "../../contexts/NotesContext";
 
 
 export const NotesList = () => {
-	const { notes, isLoading } = useNotesContext()
+	const { notes, isLoading, searchInputValue } = useNotesContext()
 	
 	if (isLoading) {
 		return <div className={styles.container}>
@@ -18,7 +18,7 @@ export const NotesList = () => {
 		</div>
 	}
 
-	if (notes?.length === 0) {
+	if (notes?.length === 0 && !searchInputValue) {
 		return <div className={styles.container}>
 			<div className={styles.empty}>
 				<CiStickyNote />
@@ -28,7 +28,7 @@ export const NotesList = () => {
 		</div>
 	}
 
-	if (false) {
+	if (notes?.length === 0 && searchInputValue) {
 		return <div className={styles.container}>
 			<div className={styles.empty}>
 				<FaRegFrownOpen />
