@@ -1,16 +1,15 @@
 import { useNotesContext } from "../../contexts/NotesContext";
+import type { Note } from "../../types/types";
 import styles from "./Statusbar.module.css"
 
 export const Statusbar = () => {
 	const { allNotes, notes, searchInputValue } = useNotesContext();
 	const year = new Date().getFullYear();
 
-	const getRecordsText = (count: number | null) => {
-		if (count === null) {
-			return 
-		}
-
+	const getRecordsText = (notes: Note[] | null) => {
 		const forms = ['запись', 'записи', 'записей'];
+		let count = notes === null ? 0 : notes.length
+
 		const lastDigit = count % 10;
 		const lastTwoDigits = count % 100;
 
@@ -28,15 +27,13 @@ export const Statusbar = () => {
 		return `${count} ${form}`;
 	}
 
-	// const renderSearchStatus = () => {
-	// 	return <span className={styles.status}>Поиск: "{searchInputValue}" ({getRecordsText(notes.length)})</span>
-	// }
-
 	return (
 		<div className={styles.statusbar}>
 			<div className={styles.bar_info}>
 				Всего записей: <span className={styles.total}>{allNotes?.length}</span>
-				{searchInputValue.length ? <span className={styles.status}>Поиск: "{searchInputValue}" ({getRecordsText(notes?.length)})</span> : ''}
+				{searchInputValue && (
+					<span className={styles.status}>Поиск: "{searchInputValue}" ({getRecordsText(notes)})</span>
+				)}
 			</div>
 			<div className={styles.bar_copy}>Блокнот для записей © {year}</div>
 		</div>

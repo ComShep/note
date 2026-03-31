@@ -27,7 +27,6 @@ export const NotesItem = ({ note }: Props) => {
 
 	return (
 		<li
-		
 			className={noteItemClass}
 			onClick={() => handleClick(note.id)}
 		>

@@ -111,12 +111,13 @@ export const useNotesManager = () => {
 		}
 
 		if (!searchInputValue.trim()) {
-			setFilteredNotes(notes)
+			setFilteredNotes(notes);
+			return 
 		}
 
 		const queryLowerCase = searchInputValue.toLowerCase();
 		setFilteredNotes(notes.filter(note =>
-			note.title.toLowerCase().includes(queryLowerCase) || note.text.toLocaleLowerCase().includes(queryLowerCase)
+			note.title.toLowerCase().includes(queryLowerCase) || note.text.toLowerCase().includes(queryLowerCase)
 		))
 	}, [notes, searchInputValue])
 

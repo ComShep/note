@@ -16,7 +16,7 @@ export const getNotesDetail = async (id:string): Promise<NotesDetailResponse> =>
 	return data;
 }
 
-export const patchNotesDetail = async (id: string, activeNote: Note) => {
+export const patchNotesDetail = async (id: string, activeNote: Note): Promise<NotesDetailResponse> => {
 	const response = await fetch(`${url}notes/${id}.json`, {
 		method: "PATCH",
 		headers: {
@@ -37,7 +37,7 @@ export const patchNotesDetail = async (id: string, activeNote: Note) => {
 	return result
 }
 
-export const createNewNote = async () => {
+export const createNewNote = async (): Promise<Note> => {
 	const newNote = {
 		title: 'Новая запись',
 		text: '',
@@ -61,7 +61,7 @@ export const createNewNote = async () => {
 	}
 }
 
-export const deleteNoteApi = async (id:string) => {
+export const deleteNoteApi = async (id:string): Promise<boolean> => {
 	const response = await fetch(`${url}notes/${id}.json`, {
 		method: "DELETE",
 	});
