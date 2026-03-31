@@ -1,0 +1,20 @@
+.statusbar{
+	padding: 15px 30px;
+	background-color: #f9f9f9;
+	border-top: 1px solid #eaeaea;
+	color: #666;
+	font-size: 0.9rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.total{
+	font-weight: 600;
+	color: #2575fc;
+}
+
+.status {
+	margin-left: 15px;
+	color: #2575fc;
+}
+

@@ -121,7 +121,8 @@ export const useNotesManager = () => {
 	}, [notes, searchInputValue])
 
 	return {
-		// данные 
+		// данные
+		allNotes: notes,
 		notes: filteredNotes,
 		isLoading,
 		activeNoteId,

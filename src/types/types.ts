@@ -22,7 +22,8 @@ export type useNotesReturn = {
 }
 
 export type NotesContextType = {
-	notes: Note[] | null,
+	allNotes: Note[],
+	notes: Note[],
 	isLoading: boolean;
 	activeNoteId: string | null,
 	setActiveNoteId: (id: string) => void,
