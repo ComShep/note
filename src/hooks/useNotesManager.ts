@@ -72,7 +72,9 @@ export const useNotesManager = () => {
       } catch (err) {
         setNotes(prevNotes);
         console.log(err);
-      }
+      } finally {
+				
+			}
     }
   }, [
     activeNoteId,

@@ -20,7 +20,7 @@ export const getNotesDetail = async (
   id: string,
 ): Promise<NotesDetailResponse> => {
   try {
-    const response = await fetch(`${testUrl}notes/${id}.json`);
+    const response = await fetch(`${url}notes/${id}.json`);
     const data = await response.json();
 
     return data;
@@ -37,7 +37,7 @@ export const createNewNote = async (): Promise<Note> => {
       date: new Date().toLocaleString("ru-RU"),
     };
 
-    const response = await fetch(`${testUrl}notes.json`, {
+    const response = await fetch(`${url}notes.json`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,32 +57,30 @@ export const createNewNote = async (): Promise<Note> => {
   }
 };
 
-export const patchNotesDetail = async (
-  id: string,
-  activeNote: Note,
-): Promise<NotesDetailResponse> => {
-  const response = await fetch(`${url}notes/${id}.json`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      title: activeNote.title.trim(),
-      text: activeNote.text.trim(),
-      date: activeNote.date,
-    }),
-  });
+export const patchNotesDetail = async (id: string,activeNote: Note,): Promise<NotesDetailResponse> => {
+  try {
+    const response = await fetch(`${url}notes/${id}.json`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: activeNote.title.trim(),
+        text: activeNote.text.trim(),
+        date: activeNote.date,
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error("Ошибка обновления");
+    const result = response.json();
+    return result;
+  } catch (error) {
+    throw error;
   }
-
-  const result = response.json();
-  return result;
 };
 
 export const deleteNoteApi = async (id: string): Promise<boolean> => {
-  const response = await fetch(`${url}notes/${id}.json`, {
+	try {
+		const response = await fetch(`${url}notes/${id}.json`, {
     method: "DELETE",
   });
 
@@ -91,4 +89,7 @@ export const deleteNoteApi = async (id: string): Promise<boolean> => {
   }
 
   return true;
+	} catch (error) {
+		throw error;
+	}
 };
