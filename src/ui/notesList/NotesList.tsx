@@ -6,11 +6,8 @@ import { NotesItem } from "../notesItem/NotesItem";
 import { useNotesContext } from "../../contexts/NotesContext";
 import { Button } from "../elements/Button";
 
-
 export const NotesList = () => {
 	const { notes, isLoading, searchInputValue, loadNotesData, error } = useNotesContext();
-	
-	console.log(error);
 
 	if (isLoading) {
 		return <div className={styles.container}>

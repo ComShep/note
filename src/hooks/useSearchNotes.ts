@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Note } from "../types/types";
-import { useNotesData } from "./useNotesData";
 
-export const useSearchNotes = () => {
-	const { notes } = useNotesData();
+type Props = {
+	notes: Note[] | null
+}
+
+export const useSearchNotes = ({notes}: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [filteredNotes, setFilteredNotes] = useState<Note[] | null>(null);
 
-  const searchNotes = (query: string) => {
+  const searchNotes = useCallback((query: string) => {
     setSearchInputValue(query);
-  };
+  }, [setSearchInputValue]);
+
 
   useEffect(() => {
     if (!notes) {

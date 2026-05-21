@@ -17,10 +17,11 @@ export type NotesDetailResponse = {
 
 export type useNotesReturn = {
 	notes: Array<Note> | null,
-	setNotes: (notes: Array<Note>) => void ,
+	setNotes: (notes: Array<Note>) => void,
 	isLoading: boolean,
+	setIsLoading: (isLoading: boolean) => void,
 	loadNotesData: () => void,
-	error: string | null
+	// error: string | null
 }
 
 export type NotesContextType = {

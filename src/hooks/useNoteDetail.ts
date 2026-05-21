@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Note } from "../types/types";
 import { getNotesDetail } from "../api/api";
 
@@ -10,7 +10,7 @@ export const useNoteDetail = () => {
 	const [titleInputValue, setTitleInputValue] = useState<string>('');
 	const [textInputValue, setTextInputValue] = useState<string>('');
 
-	const loadNoteDetail = async () => {
+	const loadNoteDetail = useCallback(async () => {
 		setIsLoadingDetail(true);
 		try {
 			if (activeNoteId !== null) {
@@ -32,7 +32,7 @@ export const useNoteDetail = () => {
 		} finally {
 			setIsLoadingDetail(false)
 		}
-	}
+	}, [activeNoteId])
 
 	useEffect(() => {
 		loadNoteDetail();
