@@ -15,10 +15,22 @@ export const Editor = () => {
 		deleteNote, 
 		isLoadingDetail,
 		editNoteDetail,
-		noteDetailError
+		addNewNote,
+		noteDetailError,
+		loadNoteDetail,
+		noteDetailErrorType
 	} = useNotesContext();
 
-	console.log(noteDetailError)
+	const handleRetry = () => {
+		switch (noteDetailErrorType) {
+			case 'load': 
+				loadNoteDetail();
+				break;
+			case 'create':
+				addNewNote();
+				break;
+		}
+	}
 
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTitleInputValue(event.target.value)
@@ -43,7 +55,7 @@ export const Editor = () => {
 			<div className={styles.container}>
 				<div className={styles.empty}>
 					<div>{noteDetailError}</div>
-					<Button color="blue" title="Повторить" onClick={() => {}}/>
+					<Button color="blue" title="Повторить" onClick={handleRetry}/>
 				</div>
 			</div>
 		)

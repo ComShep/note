@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Note } from "../types/types";
+import type { Note, NoteDetailErrorType, } from "../types/types";
 import { getNotesDetail } from "../api/api";
-
 
 export const useNoteDetail = () => {
 	const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
@@ -9,7 +8,7 @@ export const useNoteDetail = () => {
 	const [isLoadingDetail, setIsLoadingDetail] = useState<boolean>(false);
 
 	const [noteDetailError, setNoteDetailError] = useState<string | null>(null);
-
+	const [noteDetailErrorType, setNoteDetailErrorType] = useState<NoteDetailErrorType>(null);
 
 	const [titleInputValue, setTitleInputValue] = useState<string>('');
 	const [textInputValue, setTextInputValue] = useState<string>('');
@@ -17,6 +16,7 @@ export const useNoteDetail = () => {
 	const loadNoteDetail = useCallback(async () => {
 		setIsLoadingDetail(true);
 		setNoteDetailError(null);
+		setNoteDetailErrorType(null);
 		try {
 			if (activeNoteId !== null) {
 				const data = await getNotesDetail(activeNoteId);
@@ -33,7 +33,8 @@ export const useNoteDetail = () => {
 			}
 		} catch (err) {
 			console.log(err);
-			setNoteDetailError('Ошибка загрузки записи')
+			setNoteDetailError('Ошибка загрузки записи');
+			setNoteDetailErrorType('load')
 			setActiveNote(null);
 		} finally {
 			setIsLoadingDetail(false)
@@ -44,16 +45,23 @@ export const useNoteDetail = () => {
 		loadNoteDetail();
 	}, [activeNoteId])
 
+
+
 	return {
 		activeNoteId,
 		activeNote,
 		titleInputValue,
 		textInputValue,
 		isLoadingDetail,
+		setIsLoadingDetail,
 		setActiveNoteId,
 		setActiveNote,
 		setTitleInputValue,
 		setTextInputValue,
-		noteDetailError
+		loadNoteDetail,
+		noteDetailError,
+		setNoteDetailError,
+		noteDetailErrorType,
+		setNoteDetailErrorType
 	}
 }

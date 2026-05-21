@@ -1,8 +1,10 @@
 import type { Note, NotesDetailResponse, NotesResponse } from "../types/types";
 
-const url = "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase.app/";
+const url =
+  "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase.app/";
 
-const testUrl = "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase1.app/"
+const testUrl =
+  "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase1.app/";
 
 export const getNotesList = async (): Promise<NotesResponse> => {
   try {
@@ -14,12 +16,42 @@ export const getNotesList = async (): Promise<NotesResponse> => {
   }
 };
 
-export const getNotesDetail = async (id: string,): Promise<NotesDetailResponse> => {
+export const getNotesDetail = async (
+  id: string,
+): Promise<NotesDetailResponse> => {
   try {
     const response = await fetch(`${testUrl}notes/${id}.json`);
     const data = await response.json();
 
     return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createNewNote = async (): Promise<Note> => {
+  try {
+    const newNote = {
+      title: "Новая запись",
+      text: "",
+      date: new Date().toLocaleString("ru-RU"),
+    };
+
+    const response = await fetch(`${testUrl}notes.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newNote),
+    });
+
+    const result = await response.json();
+    const id = result.name;
+
+    return {
+      id: id,
+      ...newNote,
+    };
   } catch (error) {
     throw error;
   }
@@ -47,30 +79,6 @@ export const patchNotesDetail = async (
 
   const result = response.json();
   return result;
-};
-
-export const createNewNote = async (): Promise<Note> => {
-  const newNote = {
-    title: "Новая запись",
-    text: "",
-    date: new Date().toLocaleString("ru-RU"),
-  };
-
-  const response = await fetch(`${url}notes.json`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newNote),
-  });
-
-  const result = await response.json();
-  const id = result.name;
-
-  return {
-    id: id,
-    ...newNote,
-  };
 };
 
 export const deleteNoteApi = async (id: string): Promise<boolean> => {

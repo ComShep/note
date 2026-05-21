@@ -15,6 +15,8 @@ export type NotesDetailResponse = {
 	date: string
 }
 
+export type NoteDetailErrorType = 'load' | 'create' | 'edit' | 'delete' | null;
+
 export type useNotesReturn = {
 	notes: Array<Note> | null,
 	setNotes: (notes: Array<Note>) => void,
@@ -36,6 +38,7 @@ export type NotesContextType = {
 	activeNote: Note | null,
 
 	loadNotesData: () => void,
+	loadNoteDetail: () => void,
 	addNewNote: () => void,
 	deleteNote: (id: string) => void,
 	editNoteDetail: () => void,
@@ -51,4 +54,5 @@ export type NotesContextType = {
 
 	notesDataError: string | null,
 	noteDetailError: string | null,
+	noteDetailErrorType: NoteDetailErrorType
 }
