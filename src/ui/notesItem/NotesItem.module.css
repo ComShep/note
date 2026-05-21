@@ -37,3 +37,21 @@
 	color: #888;
 	margin-top: 8px;
 }
+
+@media (max-width: 768px) {
+	.item {
+		padding: 10px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.preview {
+		display: none;
+	}
+	.title {
+		margin: 0;
+	}
+	.date {
+		margin: 0;
+	}
+}

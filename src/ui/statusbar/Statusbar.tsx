@@ -30,7 +30,7 @@ export const Statusbar = () => {
 	return (
 		<div className={styles.statusbar}>
 			<div className={styles.bar_info}>
-				Всего записей: <span className={styles.total}>{allNotes?.length}</span>
+				<p>Всего записей: <span className={styles.total}>{allNotes?.length}</span></p>
 				{searchInputValue && (
 					<span className={styles.status}>Поиск: "{searchInputValue}" ({getRecordsText(notes)})</span>
 				)}

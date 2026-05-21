@@ -18,3 +18,20 @@
 	color: #2575fc;
 }
 
+@media (max-width: 768px) {
+	.statusbar{
+		flex-direction: column;
+		padding: 15px 10px;
+	}
+	.bar_info {
+		display: flex;
+		flex-direction: column;
+	}
+	.status {
+		margin: 0;
+	}
+	.bar_copy {
+		margin-top: 10px;
+		text-align: center;
+	}
+}

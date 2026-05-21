@@ -31,3 +31,9 @@
 	z-index: 1;
 	pointer-events: none; /* Чтобы клик проходил сквозь иконку к инпуту */
 }
+
+@media (max-width: 768px) {
+	.search input {
+		padding: 10px 10px 10px 45px;
+	}
+}
