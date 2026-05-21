@@ -17,3 +17,16 @@
 	opacity: 0.9;
 	font-weight: 300;
 }
+
+@media (max-width: 768px) {
+	.header {
+		padding: 15px 10px;
+	}
+	.title {
+		font-size: 1.5rem;
+	}
+
+	.subtitle{
+		font-size: 0.8rem;
+	}
+}

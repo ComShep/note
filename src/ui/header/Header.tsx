@@ -6,7 +6,7 @@ export const Header = () => {
 		<header className={styles.header}>
 			<h1 className={styles.title}>
 				<MdOutlineNoteAlt />
-				Блокнот для записей с поиском
+				Блокнот для записей
 			</h1>
 			<p className={styles.subtitle}>Создавайте, ищите и редактируйте ваши заметки</p>
 		</header>
