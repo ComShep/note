@@ -8,7 +8,7 @@ import { Button } from "../elements/Button";
 
 
 export const NotesList = () => {
-	const { notes, isLoading, searchInputValue, loadNotesData, error } = useNotesContext()
+	const { notes, isLoading, searchInputValue, loadNotesData, error } = useNotesContext();
 	
 	console.log(error);
 

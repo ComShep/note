@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
 import { useNotesData } from "./useNotesData";
-import type { Note } from "../types/types";
-import { createNewNote, deleteNoteApi, getNotesDetail, patchNotesDetail } from "../api/api";
+import { createNewNote, deleteNoteApi, patchNotesDetail } from "../api/api";
+import { useNoteDetail } from "./useNoteDetail";
+import { useSearchNotes } from "./useSearchNotes";
 
 export const useNotesManager = () => {
 	const { notes, isLoading, setNotes, loadNotesData, error } = useNotesData();
-
-	const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
-	const [activeNote, setActiveNote] = useState<Note | null>(null);
-	const [isLoadingDetail, setIsLoadingDetail] = useState<boolean>(false);
-
-	const [titleInputValue, setTitleInputValue] = useState<string>('');
-	const [textInputValue, setTextInputValue] = useState<string>('');
-
-	const [searchInputValue, setSearchInputValue] = useState<string>('');
-	const [filteredNotes, setFilteredNotes] = useState<Note[] | null>(null);
+	const {	
+		activeNoteId, 
+		activeNote, 
+		titleInputValue, 
+		textInputValue,
+		isLoadingDetail,
+		setActiveNoteId,
+		setActiveNote,
+		setTitleInputValue,
+		setTextInputValue
+	} = useNoteDetail();
+	const { searchInputValue, filteredNotes, searchNotes, setSearchInputValue } = useSearchNotes();
 
 	const addNewNote = async () => {
 		const newNote = await createNewNote();
@@ -69,55 +71,6 @@ export const useNotesManager = () => {
 			}
 		}
 	}
-
-	const searchNotes = (query: string) => {
-		setSearchInputValue(query);
-	}
-
-	const loadNoteDetail = async () => {
-		setIsLoadingDetail(true);
-		try {
-			if (activeNoteId !== null) {
-				const data = await getNotesDetail(activeNoteId);
-				const loadedNote = {
-					id: activeNoteId,
-					...data
-				}
-				setActiveNote(loadedNote);
-
-				setTitleInputValue(loadedNote.title)
-				setTextInputValue(loadedNote.text)
-			} else {
-				setActiveNote(null)
-			}
-		} catch (err) {
-			console.log(err);
-			setActiveNote(null);
-		} finally {
-			setIsLoadingDetail(false)
-		}
-	}
-
-	useEffect(() => {
-		loadNoteDetail();
-	}, [activeNoteId])
-
-	useEffect(() => {
-		if (!notes) {
-			setFilteredNotes(null);
-			return
-		}
-
-		if (!searchInputValue.trim()) {
-			setFilteredNotes(notes);
-			return 
-		}
-
-		const queryLowerCase = searchInputValue.toLowerCase();
-		setFilteredNotes(notes.filter(note =>
-			note.title.toLowerCase().includes(queryLowerCase) || note.text.toLowerCase().includes(queryLowerCase)
-		))
-	}, [notes, searchInputValue])
 
 	return {
 		// данные

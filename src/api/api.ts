@@ -1,80 +1,85 @@
-import type { Note, NotesDetailResponse, NotesResponse } from "../types/types"
+import type { Note, NotesDetailResponse, NotesResponse } from "../types/types";
 
-const url = "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase.app/"
+const url =
+  "https://vue-with-http-6c4e8-default-rtdb.europe-west1.firebasedatabase.app/";
 
 export const getNotesList = async (): Promise<NotesResponse> => {
-	try {
-		const response = await fetch(`${url}notes.json`);
-		const data = await response.json();
+  try {
+    const response = await fetch(`${url}notes.json`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
 
-		return data;
-	} catch (error) {
-		// console.log(error)
-		throw error;
-	}	
-}
+export const getNotesDetail = async (id: string,): Promise<NotesDetailResponse> => {
+  try {
+    const response = await fetch(`${url}notes/${id}.json`);
+    const data = await response.json();
 
-export const getNotesDetail = async (id:string): Promise<NotesDetailResponse> => {
-	const response = await fetch(`${url}notes/${id}.json`);
-	const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
 
-	return data;
-}
+export const patchNotesDetail = async (
+  id: string,
+  activeNote: Note,
+): Promise<NotesDetailResponse> => {
+  const response = await fetch(`${url}notes/${id}.json`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: activeNote.title.trim(),
+      text: activeNote.text.trim(),
+      date: activeNote.date,
+    }),
+  });
 
-export const patchNotesDetail = async (id: string, activeNote: Note): Promise<NotesDetailResponse> => {
-	const response = await fetch(`${url}notes/${id}.json`, {
-		method: "PATCH",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			title: activeNote.title.trim(),
-			text: activeNote.text.trim(),
-			date: activeNote.date
-		})		
-	});
+  if (!response.ok) {
+    throw new Error("Ошибка обновления");
+  }
 
-	if (!response.ok) {
-		throw new Error('Ошибка обновления')
-	}
-
-	const result = response.json();
-	return result
-}
+  const result = response.json();
+  return result;
+};
 
 export const createNewNote = async (): Promise<Note> => {
-	const newNote = {
-		title: 'Новая запись',
-		text: '',
-		date: new Date().toLocaleString('ru-RU')
-	}
+  const newNote = {
+    title: "Новая запись",
+    text: "",
+    date: new Date().toLocaleString("ru-RU"),
+  };
 
-	const response = await fetch(`${url}notes.json`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(newNote)
-	})
+  const response = await fetch(`${url}notes.json`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newNote),
+  });
 
-	const result = await response.json();
-	const id = result.name;
+  const result = await response.json();
+  const id = result.name;
 
-	return {
-		id: id,
-		...newNote
-	}
-}
+  return {
+    id: id,
+    ...newNote,
+  };
+};
 
-export const deleteNoteApi = async (id:string): Promise<boolean> => {
-	const response = await fetch(`${url}notes/${id}.json`, {
-		method: "DELETE",
-	});
+export const deleteNoteApi = async (id: string): Promise<boolean> => {
+  const response = await fetch(`${url}notes/${id}.json`, {
+    method: "DELETE",
+  });
 
-	if (!response.ok) {
-		throw new Error('Ошибка удаления')
-	}
+  if (!response.ok) {
+    throw new Error("Ошибка удаления");
+  }
 
-	return true;
-}
-
+  return true;
+};
