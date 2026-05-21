@@ -60,6 +60,9 @@ export const useNotesManager = () => {
     };
 
     if (notes !== null) {
+			setIsLoadingDetail(true);
+			setNoteDetailError(null);
+			setNoteDetailErrorType(null);
       const prevNotes = [...notes];
       try {
         await patchNotesDetail(activeNoteId, updatedNote);
@@ -71,9 +74,10 @@ export const useNotesManager = () => {
         setActiveNote(updatedNote);
       } catch (err) {
         setNotes(prevNotes);
-        console.log(err);
+        setNoteDetailError("Ошибка обновления записи");
+				setNoteDetailErrorType('edit');
       } finally {
-				
+				setIsLoadingDetail(false);
 			}
     }
   }, [
@@ -86,9 +90,12 @@ export const useNotesManager = () => {
     setActiveNote,
   ]);
 
-  const deleteNote = useCallback(
-    async (id: string) => {
+  const deleteNote = useCallback(async (id: string) => {
       if (notes !== null) {
+				setIsLoadingDetail(true);
+				setNoteDetailError(null);
+				setNoteDetailErrorType(null);
+
         try {
           await deleteNoteApi(id);
           setNotes(notes.filter((note) => note.id !== id));
@@ -98,7 +105,11 @@ export const useNotesManager = () => {
           setTextInputValue("");
         } catch (err) {
           console.log(err);
-        }
+					setNoteDetailError('Ошибка удаления записи');
+					setNoteDetailErrorType('delete')
+        } finally {
+					setIsLoadingDetail(false);
+				}
       }
     },
     [

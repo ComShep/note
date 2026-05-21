@@ -22,13 +22,21 @@ export const Editor = () => {
 	} = useNotesContext();
 
 	const handleRetry = () => {
-		switch (noteDetailErrorType) {
+		if (activeNote){
+			switch (noteDetailErrorType) {
 			case 'load': 
 				loadNoteDetail();
 				break;
 			case 'create':
 				addNewNote();
 				break;
+			case 'edit':
+				editNoteDetail();
+				break;
+			case 'delete':
+				deleteNote(activeNote.id)
+				break;
+			}
 		}
 	}
 
