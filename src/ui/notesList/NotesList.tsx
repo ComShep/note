@@ -4,16 +4,29 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import styles from './NotesList.module.css'
 import { NotesItem } from "../notesItem/NotesItem";
 import { useNotesContext } from "../../contexts/NotesContext";
+import { Button } from "../elements/Button";
 
 
 export const NotesList = () => {
-	const { notes, isLoading, searchInputValue } = useNotesContext()
+	const { notes, isLoading, searchInputValue, loadNotesData, error } = useNotesContext()
 	
+	console.log(error);
+
 	if (isLoading) {
 		return <div className={styles.container}>
 			<div className={styles.empty}>
 				<AiOutlineClockCircle />
 				<p>Загрузка...</p>
+			</div>
+		</div>
+	}
+
+		if (error) {
+		return <div className={styles.container}>
+			<div className={styles.empty}>
+				<FaRegFrownOpen />
+				<p>{error}</p>
+				<Button color="blue" title="Повторить" onClick={loadNotesData}/>
 			</div>
 		</div>
 	}

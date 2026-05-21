@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import type { ReactNode } from 'react'
 
 type Props = {
-	icon: ReactNode,
+	icon?: ReactNode,
 	title: string
 	color: string
 	onClick: () => void

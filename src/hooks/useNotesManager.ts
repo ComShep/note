@@ -4,7 +4,7 @@ import type { Note } from "../types/types";
 import { createNewNote, deleteNoteApi, getNotesDetail, patchNotesDetail } from "../api/api";
 
 export const useNotesManager = () => {
-	const { notes, isLoading, setNotes } = useNotesData();
+	const { notes, isLoading, setNotes, loadNotesData, error } = useNotesData();
 
 	const [activeNoteId, setActiveNoteId] = useState<string | null>(null);
 	const [activeNote, setActiveNote] = useState<Note | null>(null);
@@ -42,13 +42,11 @@ export const useNotesManager = () => {
 			const prevNotes = [...notes];
 			try {
 				await patchNotesDetail(activeNoteId, updatedNote);
-
-				// Обновляем список
+				
 				setNotes(notes.map(note =>
 					note.id === activeNoteId ? updatedNote : note
 				));
 
-				// Обновляем активную заметку
 				setActiveNote(updatedNote);
 			} catch (err) {
 				setNotes(prevNotes);
@@ -132,14 +130,17 @@ export const useNotesManager = () => {
 		titleInputValue,
 		textInputValue,
 		searchInputValue,
-		setSearchInputValue,
+		error,
+		
 
 		// сеттеры
 		setActiveNoteId,
 		setTitleInputValue,
 		setTextInputValue,
+		setSearchInputValue,
 
 		// действия
+		loadNotesData,
 		addNewNote,
 		editNoteDetail,
 		deleteNote,

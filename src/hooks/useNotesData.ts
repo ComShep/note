@@ -4,13 +4,21 @@ import { getNotesList } from "../api/api";
 
 
 export function useNotesData(): useNotesReturn {
-	const [notes, setNotes] = useState<Note[]>([])
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [notes, setNotes] = useState<Note[] | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null)
 
 	const loadNotesData = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
+		setError(null)
 		try {
-			const data = await getNotesList()
+			const data = await getNotesList();
+
+			if (!data) {
+				setNotes([]);
+				return;
+			}
+
 			const arrayOfData = Object.entries(data);
 			const arrayOfNotes = arrayOfData.map(([id, note]) => ({
 				id: id,
@@ -19,6 +27,7 @@ export function useNotesData(): useNotesReturn {
 			setNotes(arrayOfNotes)
 		} catch (err) {
 			console.log(err)
+			setError('Ошибка загрузки данных')
 		} finally  {
 			setIsLoading(false)
 		}
@@ -31,6 +40,8 @@ export function useNotesData(): useNotesReturn {
 	return {
 		notes,
 		setNotes,
-		isLoading
+		isLoading,
+		loadNotesData,
+		error,
 	}
 }
