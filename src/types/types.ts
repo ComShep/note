@@ -21,7 +21,7 @@ export type useNotesReturn = {
 	isLoading: boolean,
 	setIsLoading: (isLoading: boolean) => void,
 	loadNotesData: () => void,
-	// error: string | null
+	notesDataError: string | null
 }
 
 export type NotesContextType = {
@@ -35,6 +35,7 @@ export type NotesContextType = {
 	setActiveNoteId: (id: string) => void,
 	activeNote: Note | null,
 
+	loadNotesData: () => void,
 	addNewNote: () => void,
 	deleteNote: (id: string) => void,
 	editNoteDetail: () => void,
@@ -48,6 +49,6 @@ export type NotesContextType = {
 	setSearchInputValue: (value: string) => void,
 	searchNotes: (value: string) => void,
 
-	error: string | null,
-	loadNotesData: () => void,
+	notesDataError: string | null,
+	noteDetailError: string | null,
 }

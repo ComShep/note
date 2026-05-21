@@ -2,11 +2,10 @@ import { useNotesData } from "./useNotesData";
 import { createNewNote, deleteNoteApi, patchNotesDetail } from "../api/api";
 import { useNoteDetail } from "./useNoteDetail";
 import { useSearchNotes } from "./useSearchNotes";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 export const useNotesManager = () => {
-	const [error, setError] = useState<string | null>(null);
-	const { notes, isLoading, setNotes, loadNotesData, } = useNotesData({setError});
+	const { notes, isLoading, setNotes, loadNotesData, notesDataError } = useNotesData();
 	const {	
 		activeNoteId, 
 		activeNote, 
@@ -16,7 +15,8 @@ export const useNotesManager = () => {
 		setActiveNoteId,
 		setActiveNote,
 		setTitleInputValue,
-		setTextInputValue
+		setTextInputValue,
+		noteDetailError
 	} = useNoteDetail();
 	const { searchInputValue, filteredNotes, searchNotes, setSearchInputValue } = useSearchNotes({notes});
 
@@ -85,8 +85,8 @@ export const useNotesManager = () => {
 		titleInputValue,
 		textInputValue,
 		searchInputValue,
-		error,
-		
+		notesDataError,
+		noteDetailError,
 
 		// сеттеры
 		setActiveNoteId,

@@ -2,16 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import type { Note, useNotesReturn } from "../types/types";
 import { getNotesList } from "../api/api";
 
-type useNotesDataProps = {
-	setError: (error: string | null) => void
-}
-
-export function useNotesData({setError}: useNotesDataProps): useNotesReturn {
+export function useNotesData(): useNotesReturn {
 	const [notes, setNotes] = useState<Note[] | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [notesDataError, setNotesDataError] = useState<string | null>(null);
 
 	const loadNotesData = useCallback(async () => {
-		setError(null)
+		setNotesDataError(null)
 		try {
 			const data = await getNotesList();
 
@@ -28,7 +25,7 @@ export function useNotesData({setError}: useNotesDataProps): useNotesReturn {
 			setNotes(arrayOfNotes)
 		} catch (err) {
 			console.log(err)
-			setError('Ошибка загрузки данных');
+			setNotesDataError('Ошибка загрузки списка записей');
 			setNotes([]);
 		} finally  {
 			setIsLoading(false)
@@ -45,5 +42,6 @@ export function useNotesData({setError}: useNotesDataProps): useNotesReturn {
 		isLoading,
 		setIsLoading,
 		loadNotesData,
+		notesDataError
 	}
 }

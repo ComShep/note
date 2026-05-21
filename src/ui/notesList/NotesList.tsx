@@ -7,7 +7,7 @@ import { useNotesContext } from "../../contexts/NotesContext";
 import { Button } from "../elements/Button";
 
 export const NotesList = () => {
-	const { notes, isLoading, searchInputValue, loadNotesData, error } = useNotesContext();
+	const { notes, isLoading, searchInputValue, loadNotesData, notesDataError } = useNotesContext();
 
 	if (isLoading) {
 		return <div className={styles.container}>
@@ -18,11 +18,11 @@ export const NotesList = () => {
 		</div>
 	}
 
-		if (error) {
+	if (notesDataError) {
 		return <div className={styles.container}>
 			<div className={styles.empty}>
 				<FaRegFrownOpen />
-				<p>{error}</p>
+				<p>{notesDataError}</p>
 				<Button color="blue" title="Повторить" onClick={loadNotesData}/>
 			</div>
 		</div>

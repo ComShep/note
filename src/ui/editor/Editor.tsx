@@ -14,8 +14,11 @@ export const Editor = () => {
 		setTextInputValue, 
 		deleteNote, 
 		isLoadingDetail,
-		editNoteDetail
+		editNoteDetail,
+		noteDetailError
 	} = useNotesContext();
+
+	console.log(noteDetailError)
 
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTitleInputValue(event.target.value)
@@ -30,6 +33,17 @@ export const Editor = () => {
 			<div className={styles.container}>
 				<div className={styles.empty}>
 					<div>Загрузка...</div>
+				</div>
+			</div>
+		)
+	}
+
+	if (noteDetailError) {
+		return (
+			<div className={styles.container}>
+				<div className={styles.empty}>
+					<div>{noteDetailError}</div>
+					<Button color="blue" title="Повторить" onClick={() => {}}/>
 				</div>
 			</div>
 		)
