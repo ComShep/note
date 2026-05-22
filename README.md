@@ -32,7 +32,7 @@ https://comshep.github.io/note/
 
 src/
 - api/          # API запросы
-- contexts/     # React контексты
-- hooks/        # Пользовательские хуки
-- ui/           # UI компоненты
-- types/        # TypeScript типы
+- contexts/     # контекст/управление состоянием
+- hooks/        # кастомные хуки
+- ui/           # компоненты
+- types/        # типы
