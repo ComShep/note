@@ -30,8 +30,8 @@ https://comshep.github.io/note/
 **📁 Структура**
 
 src/
-├── api/          # API запросы
-├── contexts/     # React контексты
-├── hooks/        # Пользовательские хуки
-├── ui/           # UI компоненты
-└── types/        # TypeScript типы
+- api/          # API запросы
+- contexts/     # React контексты
+- hooks/        # Пользовательские хуки
+- ui/           # UI компоненты
+- types/        # TypeScript типы
