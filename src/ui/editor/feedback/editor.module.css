@@ -1,0 +1,10 @@
+.feedback {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
+	gap: 20px;
+	align-items: center;
+	padding: 40px 20px;
+	color: #999;
+}

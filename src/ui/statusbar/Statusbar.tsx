@@ -28,7 +28,7 @@ export const Statusbar = () => {
 	}
 
 	return (
-		<div className={styles.statusbar}>
+		<footer className={styles.statusbar}>
 			<div className={styles.bar_info}>
 				<p>Всего записей: <span className={styles.total}>{allNotes?.length}</span></p>
 				{searchInputValue && (
@@ -36,6 +36,6 @@ export const Statusbar = () => {
 				)}
 			</div>
 			<div className={styles.bar_copy}>Блокнот для записей © {year}</div>
-		</div>
+		</footer>
 	)
 }

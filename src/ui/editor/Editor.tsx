@@ -2,8 +2,11 @@ import { IoIosSave } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import styles from './Editor.module.css'
 import { useNotesContext } from "../../contexts/NotesContext";
-import { type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import { Button } from '../elements/Button';
+import { Empty } from "./feedback/Empty";
+import { Loading } from "./feedback/Loading";
+import { Error } from "./feedback/Error";
 
 export const Editor = () => {
 	const { 
@@ -14,104 +17,63 @@ export const Editor = () => {
 		setTextInputValue, 
 		deleteNote, 
 		isLoadingDetail,
-		editNoteDetail,
-		addNewNote,
 		noteDetailError,
-		loadNoteDetail,
-		noteDetailErrorType
+		editNoteDetail
 	} = useNotesContext();
+	const [isSaveSuccess, setIsSaveSuccess] = useState<boolean>(false)
 
-	const handleRetry = () => {
-		if (activeNote){
-			switch (noteDetailErrorType) {
-			case 'load': 
-				loadNoteDetail();
-				break;
-			case 'create':
-				addNewNote();
-				break;
-			case 'edit':
-				editNoteDetail();
-				break;
-			case 'delete':
-				deleteNote(activeNote.id)
-				break;
-			}
-		}
-	}
+	const handleSave = () => {
+			editNoteDetail();
+	
+			setIsSaveSuccess(true);
 
-	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setTitleInputValue(event.target.value)
-	}
-
-	const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-		setTextInputValue(event.target.value)
-	}
-
-	if (isLoadingDetail) {
-		return (
-			<div className={styles.container}>
-				<div className={styles.empty}>
-					<div>Загрузка...</div>
-				</div>
-			</div>
-		)
-	}
-
-	if (noteDetailError) {
-		return (
-			<div className={styles.container}>
-				<div className={styles.empty}>
-					<div>{noteDetailError}</div>
-					<Button color="blue" title="Повторить" onClick={handleRetry}/>
-				</div>
-			</div>
-		)
-	}
-
-	if (!activeNote) {
-		return (
-			<div className={styles.container}>
-				<div className={styles.empty}>
-					<div>Выберите запись или создайте новую</div>
-				</div>
-			</div>
-		)
-	}
+			setTimeout(() => {
+				setIsSaveSuccess(false);
+			}, 3000);
+		
+	};
 
 	return (
-		<div
+		<section
 			className={styles.container}>
-			<div className={styles.header}>
-				<input
-					className={styles.title}
-					placeholder='Введите заголовок записи...'
-					value={titleInputValue}
-					onChange={handleTitleChange}
-				/>
-			</div>
-			<div className={styles.area}>
-				<textarea
-					className={styles.text}
-					placeholder='Введите текст записи...'
-					value={textInputValue}
-					onChange={handleTextChange}
-				></textarea>
-				<div className={styles.actions}>
-					<Button
-						title='Сохранить'
-						icon={<IoIosSave />}
-						onClick={() => editNoteDetail()}
-						color="blue"
-					/>
-					<Button
-						title='Удалить'
-						icon={<MdDelete />}
-						onClick={() => deleteNote(activeNote.id)}
-						color="red"
-					/>
-				</div>
-			</div>
-		</div>
+				{isLoadingDetail && <Loading/>}
+				{!isLoadingDetail && noteDetailError && <Error/>}
+				{!isLoadingDetail && !noteDetailError &&  !activeNote && <Empty/>}
+				{!isLoadingDetail && !noteDetailError && activeNote && (
+					<>
+						<div className={styles.header}>
+							<input
+								className={styles.title}
+								placeholder='Введите заголовок записи...'
+								value={titleInputValue}
+								onChange={(e: ChangeEvent<HTMLInputElement>) => {setTitleInputValue(e.target.value)}}
+							/>
+						</div>
+						<div className={styles.area}>
+							<textarea
+								className={styles.text}
+								placeholder='Введите текст записи...'
+								value={textInputValue}
+								onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {setTextInputValue(e.target.value)}}
+							></textarea>
+							<div className={styles.actions}>
+								<Button
+									title='Сохранить'
+									icon={<IoIosSave />}
+									onClick={() => handleSave()}
+									color="blue"
+								/>
+								{isSaveSuccess && <span>✅ Запись успешно сохранена!</span>}
+								<Button
+									title='Удалить'
+									icon={<MdDelete />}
+									onClick={() => deleteNote(activeNote.id)}
+									color="red"
+								/>
+							</div>
+						</div>
+					</>
+				)}
+		</section>
 	)
 }
