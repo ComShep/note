@@ -25,7 +25,8 @@ https://comshep.github.io/note/
 1. git clone https://github.com/ComShep/note.git
 2. cd note
 3. npm install
-4. npm run preview / npm run dev
+4. npm run build
+5. npm run preview / npm run dev
 
 **📁 Структура**
 
