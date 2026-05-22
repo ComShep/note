@@ -1,63 +1,30 @@
-import { CiStickyNote } from "react-icons/ci";
-import { FaRegFrownOpen } from "react-icons/fa";
-import { AiOutlineClockCircle } from "react-icons/ai";
 import styles from './NotesList.module.css'
 import { NotesItem } from "../notesItem/NotesItem";
 import { useNotesContext } from "../../contexts/NotesContext";
-import { Button } from "../elements/Button";
+import { Loading } from "./feedback/Loading";
+import { Error } from './feedback/Error';
+import { Empty } from './feedback/Empty';
+import { NoSearchResult } from './feedback/NoSearchResult';
 
 export const NotesList = () => {
-	const { notes, isLoading, searchInputValue, loadNotesData, notesDataError } = useNotesContext();
-
-	if (isLoading) {
-		return <div className={styles.container}>
-			<div className={styles.empty}>
-				<AiOutlineClockCircle />
-				<p>Загрузка...</p>
-			</div>
-		</div>
-	}
-
-	if (notesDataError) {
-		return <div className={styles.container}>
-			<div className={styles.empty}>
-				<FaRegFrownOpen />
-				<p>{notesDataError}</p>
-				<Button color="blue" title="Повторить" onClick={loadNotesData}/>
-			</div>
-		</div>
-	}
-
-	if (notes?.length === 0 && !searchInputValue) {
-		return <div className={styles.container}>
-			<div className={styles.empty}>
-				<CiStickyNote />
-				<p>У вас пока нет записей</p>
-				<p>Нажмите "Новая запись", чтобы создать первую</p>
-			</div>
-		</div>
-	}
-
-	if (notes?.length === 0 && searchInputValue) {
-		return <div className={styles.container}>
-			<div className={styles.empty}>
-				<FaRegFrownOpen />
-				<p>Ничего не нашлось</p>
-				<p>Попробуйте ввести другой запрос</p>
-			</div>
-		</div>
-	}
+	const { notes, isLoading, searchInputValue, notesDataError } = useNotesContext();
 
 	return (
 		<div className={styles.container}>
-			<ul>
+			{isLoading && <Loading/>}
+			{!isLoading && notesDataError && <Error/>}
+			{!isLoading && !notesDataError && notes?.length === 0 && !searchInputValue && <Empty/>}
+			{!isLoading && !notesDataError && notes?.length === 0 && searchInputValue && <NoSearchResult/>}
+			{!isLoading && !notesDataError && notes && !searchInputValue && (
+				<ul>
 				{notes?.map(note => (
 					<NotesItem
 						key={note.id}
 						note={note}
 					/>
 				))}
-			</ul>
+				</ul>
+			)}
 		</div>
 	)
 }

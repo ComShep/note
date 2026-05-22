@@ -1,0 +1,16 @@
+.feedback {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  width: 100%;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.feedback svg {
+  font-size: 3rem;
+  opacity: 0.5;
+}

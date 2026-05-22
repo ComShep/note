@@ -1,4 +1,4 @@
-import styles from './editor.module.css'
+import styles from './Feedback.module.css'
 
 export const Empty = () => {
 	return (

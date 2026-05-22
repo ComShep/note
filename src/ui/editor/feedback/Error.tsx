@@ -1,6 +1,6 @@
 import { useNotesContext } from "../../../contexts/NotesContext";
 import { Button } from "../../elements/Button";
-import styles from "./editor.module.css";
+import styles from './Feedback.module.css'
 
 export const Error = () => {
   const {
